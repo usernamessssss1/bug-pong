@@ -1,6 +1,7 @@
 from pygame import *
 from random import *
 
+font.init()
 back =(200,255,255)
 window = display.set_mode((600,500))
 window.fill(back)
@@ -41,6 +42,16 @@ class Player(GameSprite):
             self.rect.y += self.speed
 
 
+win1 = font.Font(None,35)
+lose1 = win1.render(
+    'Player1 LOSE!', True, (180,0,0))
+
+
+win2 = font.Font(None,35)
+lose2 = win2.render(
+    'Player2 LOSE!', True, (180,0,0))
+
+
 
 
 game = True
@@ -59,8 +70,8 @@ speed_y = 3
 #перемещения мяча
 
 #создаем спрайты
-raсket1 = Player('синий амонг.png',30,200,5,50,500)#120=400
-racket2 = Player('фиол амонг (1).png',525,200,5,50,50)#120=400
+raсket1 = Player('синий амонг.png',30,200,5,50,550)#120=550
+racket2 = Player('фиол амонг.png',525,200,5,50,50)#120=400
 ball = GameSprite('мяч черный.png',200,250,3,50,50)#50=100
 
 while game:
@@ -74,6 +85,14 @@ while game:
         racket2.update_r()
         ball.rect.x += speed_x
         ball.rect.y += speed_y
+
+        if ball.rect.x <0:
+            finish = True
+            window.blit(lose1, (200,200))
+
+        if ball.rect.x > 650:
+            finish = True
+            window.blit(lose2, (200,200))
 
         if ball.rect.y<0 or ball.rect.y>450:
             speed_y *=-1.1
